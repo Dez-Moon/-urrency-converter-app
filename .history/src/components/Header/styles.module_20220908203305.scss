@@ -12,20 +12,8 @@
 
   .currencyRates {
     display: flex;
-    gap: 40px;
+    // gap: 40px;
     margin-right: 20px;
-    @media (max-width: 540px) {
-      gap: 20px;
-    }
-    @media (max-width: 390px) {
-      margin-right: 10px;
-      gap: 10px;
-    }
-    @media (max-width: 350px) {
-      width: 100%;
-      justify-content: space-between;
-      margin: 0 10px;
-    }
     .currency {
       display: flex;
       flex-direction: column;
@@ -64,13 +52,6 @@
       white-space: normal;
       height: 100%;
       width: 100px;
-    }
-    @media (max-width: 390px) {
-      font-size: 13px;
-      left: 0;
-    }
-    @media (max-width: 350px) {
-      display: none;
     }
   }
 }

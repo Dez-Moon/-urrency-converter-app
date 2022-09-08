@@ -3,7 +3,6 @@
   opacity: 0;
   height: 100px;
   z-index: 2;
-  width: 240px;
   bottom: 0;
   .errors {
     position: relative;
@@ -11,7 +10,6 @@
     .error {
       position: absolute;
       width: 100%;
-      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;

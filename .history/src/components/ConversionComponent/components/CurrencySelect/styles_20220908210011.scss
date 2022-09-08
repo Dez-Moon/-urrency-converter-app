@@ -10,9 +10,9 @@
   border-radius: 10px;
   width: 65%;
   max-height: 0;
+  overflow-y: scroll;
   z-index: 2;
   background-color: white;
-  overflow: hidden;
   .currency {
     display: flex;
     gap: 5px;

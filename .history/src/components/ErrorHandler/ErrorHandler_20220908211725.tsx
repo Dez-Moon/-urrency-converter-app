@@ -22,10 +22,7 @@ const ErrorHandler = () => {
         <div className='errors'>
           {errors.map((error, index) => {
             const style = {
-              bottom:
-                screenWidth > 505
-                  ? `${index * 30 - 100}px`
-                  : `${-index * 30 - 110}px`,
+              bottom: `${index * 30 - 100}px`,
             };
             return <Error error={error} style={style} />;
           })}

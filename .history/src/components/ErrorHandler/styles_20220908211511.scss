@@ -1,9 +1,9 @@
 .errorHandler {
   position: absolute;
   opacity: 0;
+  width: fit-content
   height: 100px;
   z-index: 2;
-  width: 240px;
   bottom: 0;
   .errors {
     position: relative;
@@ -11,10 +11,10 @@
     .error {
       position: absolute;
       width: 100%;
-      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      padding: 20px;
       text-align: center;
       justify-content: center;
       align-items: center;

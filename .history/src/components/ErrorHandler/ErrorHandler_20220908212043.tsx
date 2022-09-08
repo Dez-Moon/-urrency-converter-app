@@ -25,7 +25,7 @@ const ErrorHandler = () => {
               bottom:
                 screenWidth > 505
                   ? `${index * 30 - 100}px`
-                  : `${-index * 30 - 110}px`,
+                  : `${-index * 30 - 100}px`,
             };
             return <Error error={error} style={style} />;
           })}

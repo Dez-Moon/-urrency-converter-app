@@ -14,18 +14,6 @@
     display: flex;
     gap: 40px;
     margin-right: 20px;
-    @media (max-width: 540px) {
-      gap: 20px;
-    }
-    @media (max-width: 390px) {
-      margin-right: 10px;
-      gap: 10px;
-    }
-    @media (max-width: 350px) {
-      width: 100%;
-      justify-content: space-between;
-      margin: 0 10px;
-    }
     .currency {
       display: flex;
       flex-direction: column;
@@ -59,18 +47,9 @@
     @media (max-width: 540px) {
       display: flex;
       align-items: center;
-      text-align: center;
       font-size: 16px;
       white-space: normal;
       height: 100%;
-      width: 100px;
-    }
-    @media (max-width: 390px) {
-      font-size: 13px;
-      left: 0;
-    }
-    @media (max-width: 350px) {
-      display: none;
     }
   }
 }

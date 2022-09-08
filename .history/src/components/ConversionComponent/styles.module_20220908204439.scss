@@ -9,6 +9,7 @@
   @media (max-width: 505px) {
     align-items: center;
   }
+
   .addCurrency {
     position: relative;
     display: flex;
@@ -43,8 +44,5 @@
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
-    @media (max-width: 505px) {
-      justify-content: center;
-    }
   }
 }
