@@ -1,0 +1,13 @@
+.conversionComponent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding: 20px;
+  .conversionBlockContainer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}

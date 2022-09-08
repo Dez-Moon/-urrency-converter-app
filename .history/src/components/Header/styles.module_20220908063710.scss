@@ -1,0 +1,23 @@
+.header {
+  height: 50px;
+  background: rgba(112, 128, 166, 0.2);
+  border: 0.5px solid gray;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  .currencyRates {
+    display: flex;
+    gap: 10px;
+    .currency {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .rates {
+        display: flex;
+        gap: 5px;
+      }
+    }
+  }
+}

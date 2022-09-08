@@ -1,0 +1,21 @@
+.conversionComponent {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .selectedCurrency {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .arrowImg {
+    position: absolute;
+    right: 0;
+  }
+  img {
+    border-radius: 50px;
+    height: 20px;
+    width: 20px;
+  }
+}

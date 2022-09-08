@@ -1,0 +1,39 @@
+.currencySelect {
+  background: rgba(112, 128, 166, 0.2);
+  border: 0.5px solid gray;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 25px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  width: 65%;
+  height: 0;
+  overflow-y: hidden;
+  opacity: 0;
+  .currency {
+    display: flex;
+  }
+  .currency:hover {
+    box-shadow: inset 0 2em 2em rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgb(112, 128, 166, 0.2), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  }
+}
+.currencySelect-enter {
+}
+.currencySelect-enter-done {
+  opacity: 1;
+  transition: 0.5s;
+  height: 300px;
+}
+.currencySelect-exit {
+  @apply absolute;
+  transition: 0.3s;
+}
+.currencySelect-exit-active {
+  @apply absolute;
+  transition: 1s;
+}

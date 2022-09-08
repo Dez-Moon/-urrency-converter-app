@@ -1,0 +1,19 @@
+.currencySelect {
+  position: absolute;
+}
+.currencySelect-enter {
+  transition: 0.2s;
+}
+.currencySelect-enter-done {
+  position: absolute;
+
+  transition: 0.2s;
+}
+.currencySelect-exit {
+  @apply absolute;
+  transition: 0.3s;
+}
+.currencySelect-exit-active {
+  @apply absolute;
+  transition: 1s;
+}
