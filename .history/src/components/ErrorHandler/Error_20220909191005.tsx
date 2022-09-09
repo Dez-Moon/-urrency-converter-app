@@ -12,7 +12,7 @@ const Error = React.memo((props: PropsType) => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(deleteErrorAC({ index: props.error.index }));
-    }, 1500);
+    }, 1);
   });
   return (
     <div className='error' style={props.style}>

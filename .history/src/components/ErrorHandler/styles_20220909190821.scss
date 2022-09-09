@@ -6,12 +6,10 @@
   height: 100px;
   z-index: 2;
   width: 240px;
-  bottom: 0;
   right: 20px;
   @include media(mobile) {
     margin: auto;
     top: 0;
-    bottom: auto;
     left: 0;
     right: 0;
   }
