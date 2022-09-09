@@ -1,0 +1,48 @@
+.header {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  color: white;
+  background: rgba(11, 78, 192);
+  border-radius: 0 0 5px 5px;
+  border: 0.5px solid gray;
+
+  .currencyRates {
+    display: flex;
+    gap: 40px;
+    margin-right: 20px;
+    .currency {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .currencyName {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        img {
+          height: 10px;
+        }
+      }
+      .rates {
+        display: flex;
+        gap: 5px;
+        .value {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  h1 {
+    position: absolute;
+    left: 10px;
+    width: 100%;
+    font-weight: 600;
+    font-size: 24px;
+  }
+}
