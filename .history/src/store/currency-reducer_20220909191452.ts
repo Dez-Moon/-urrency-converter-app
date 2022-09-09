@@ -158,7 +158,7 @@ export const setCurrencyTC = () => async (dispatch: Dispatch) => {
   }
   setTimeout(() => {
     dispatch(setAppLoadedAC({ value: true }));
-  }, 1500);
+  }, 2000);
 };
 export const createWindowsWithCurrencyTC =
   (currency: Array<CurrencyType>) => (dispatch: Dispatch) => {
