@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { InitialStateType } from "../../store/currency-reducer";
 import { AppRootStateType } from "../../store/store";
 import { CurrencyType } from "../../types/types";
+import { getImgFromBuffer } from "../../functions/functions";
 
 const Header = () => {
   const { currency } = useSelector<AppRootStateType>(
@@ -14,34 +15,38 @@ const Header = () => {
       array.push(el);
     }
   });
+
   return (
     <div className={styles.header}>
       <div>
         <h1>Конвертер валют</h1>
       </div>
       <div className={styles.currencyRates}>
-        {array.map((el) => (
-          <div className={styles.currency} key={el.code}>
-            <div className={styles.currencyName}>
-              <div>{el.currency}</div>
-              <img src={el.flag} />
-            </div>
-            <div className={styles.rates}>
-              <div>
-                <div className={styles.value}>
-                  <div>Покупка</div>
-                  <div>{el.rateBuy?.toFixed(2)}</div>
+        {array.map((el) => {
+          const img = getImgFromBuffer(el.flag.data);
+          return (
+            <div className={styles.currency} key={el.code}>
+              <div className={styles.currencyName}>
+                <div>{el.currency}</div>
+                <img src={img} alt={el.currency} />
+              </div>
+              <div className={styles.rates}>
+                <div>
+                  <div className={styles.value}>
+                    <div>Покупка</div>
+                    <div>{el.rateBuy?.toFixed(2)}</div>
+                  </div>
+                </div>
+                <div>
+                  <div className={styles.value}>
+                    <div>Продажа</div>
+                    <div>{el.rateSell?.toFixed(2)}</div>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div className={styles.value}>
-                  <div>Продажа</div>
-                  <div>{el.rateSell?.toFixed(2)}</div>
-                </div>
-              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

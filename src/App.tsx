@@ -2,7 +2,6 @@ import "./App.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ConversionComponent from "./components/ConversionComponent/ConversionComponent";
-import ErrorHandler from "./components/ErrorHandler/ErrorHandler";
 import Header from "./components/Header/Header";
 import {
   InitialStateType,
@@ -10,32 +9,31 @@ import {
   setListOfCurrenciesOpenAC,
 } from "./store/currency-reducer";
 import { AppRootStateType } from "./store/store";
-import GlobalError from "./components/GlobalError/GlobalError";
-import Preloader from "./components/Preloader/Preloader";
+import Preloader from "./components/Auxiliary components/Preloader/Preloader";
+import ErrorHandler from "./components/Auxiliary components/ErrorHandler/ErrorHandler";
 
 function App() {
   const dispatch = useDispatch();
-  const { globalError, appLoaded } = useSelector<AppRootStateType>(
+  const { appLoaded } = useSelector<AppRootStateType>(
     (state) => state.currency
   ) as InitialStateType;
   useEffect(() => {
     const thunk = setCurrencyTC();
     thunk(dispatch);
   }, []);
+
+  //event functions
+  const closeСurrencySelectionList = () => {
+    dispatch(setListOfCurrenciesOpenAC({ index: null, value: false }));
+  };
   if (!appLoaded) {
     return <Preloader />;
   }
   return (
-    <div
-      className='App'
-      onClick={(e: any) => {
-        dispatch(setListOfCurrenciesOpenAC({ index: null, value: false }));
-      }}
-    >
+    <div className='App' onClick={closeСurrencySelectionList}>
       <Header />
       <ConversionComponent />
       <ErrorHandler />
-      {globalError && <GlobalError />}
     </div>
   );
 }

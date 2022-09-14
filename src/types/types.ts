@@ -1,18 +1,9 @@
 export type CurrencyType = {
   code: number;
   currency: string;
+  flag: { type: string; data: Buffer };
   name: string;
-  flag: string;
   symbol: string;
-  rateBuy?: number;
-  rateSell?: number;
-  rateCross?: number;
-};
-
-export type CurrencyResponseType = {
-  currencyCodeA: number;
-  currencyCodeB: number;
-  date: number;
   rateBuy?: number;
   rateSell?: number;
   rateCross?: number;

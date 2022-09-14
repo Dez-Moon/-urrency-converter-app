@@ -11,16 +11,22 @@ import CurrencySelect from "../CurrencySelect/CurrencySelect";
 import { AppRootStateType } from "../../../../store/store";
 import arrowImg from "../../../../assets/icons/arrow-bottom.png";
 import deleteImg from "../../../../assets/icons/delete.png";
-import { getIndentForValues } from "../../../../functions/functions";
+import {
+  getImgFromBuffer,
+  getIndentForValues,
+} from "../../../../functions/functions";
 
 type PropsType = {
   index: number;
 };
 const ConversionBlock = React.memo((props: PropsType) => {
   const dispatch = useDispatch();
-  const { currency, windowsWithCurrency } = useSelector<AppRootStateType>(
-    (state) => state.currency
-  ) as InitialStateType;
+  const { currency, windowsWithCurrency } = useSelector<
+    AppRootStateType,
+    InitialStateType
+  >((state) => state.currency);
+
+  // Настраиваем отступ между value в инпуте и символом, с исключением(для валют с широким символом)
   const inputMargin = getIndentForValues(
     [
       { currency: "CZK", values: [50, 4.5] },
@@ -32,48 +38,56 @@ const ConversionBlock = React.memo((props: PropsType) => {
   const inputStyle: any = {
     right: inputMargin,
   };
+  // Переворачивание стрелки при открытии списка валют
+  const arrowImgStyle = !windowsWithCurrency[props.index].listOfCurrenciesOpen
+    ? "arrowBottom"
+    : "arrowTop";
+
   const currentCurrency =
     currency[windowsWithCurrency[props.index].selectedCurrency.index];
 
+  // event functions
+  const changeVisibilityCurrencySelection = () => {
+    setTimeout(() => {
+      const value = windowsWithCurrency[props.index].listOfCurrenciesOpen
+        ? false
+        : true;
+      dispatch(setListOfCurrenciesOpenAC({ index: props.index, value }));
+    }, 0);
+  };
+  const inputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValuesWindowsWithCurrencyTC(
+      windowsWithCurrency,
+      e.target.value,
+      props.index
+    )(dispatch);
+  };
+  const deleteCurrencyWindow = () => {
+    dispatch(deleteWindowsWithCurrencyAC({ index: props.index }));
+  };
+  const img = getImgFromBuffer(currentCurrency.flag.data);
   return (
     <div className='conversionBlock'>
       <div
         className='selectedCurrency'
-        onClick={async () => {
-          setTimeout(() => {
-            const value = windowsWithCurrency[props.index].listOfCurrenciesOpen
-              ? false
-              : true;
-            dispatch(setListOfCurrenciesOpenAC({ index: props.index, value }));
-          }, 0);
-        }}
+        onClick={changeVisibilityCurrencySelection}
       >
         <div className='flagAndAbbreviation'>
-          <img src={currentCurrency.flag} />
+          <img src={img} alt={currentCurrency.currency} />
           <div>{currentCurrency.currency}</div>
         </div>
         <div className='name'>{currentCurrency.name}</div>
         <img
           src={arrowImg}
-          className={
-            !windowsWithCurrency[props.index].listOfCurrenciesOpen
-              ? "arrowBottom"
-              : "arrowTop"
-          }
+          alt='open-select-currency'
+          className={arrowImgStyle}
         />
       </div>
       <CurrencySelect index={props.index} />
       <div className={"input"}>
         <input
-          min='0'
           value={windowsWithCurrency[props.index].value}
-          onChange={(e: any) => {
-            setValuesWindowsWithCurrencyTC(
-              windowsWithCurrency,
-              e.target.value,
-              props.index
-            )(dispatch);
-          }}
+          onChange={inputOnChange}
         />
         {windowsWithCurrency[props.index].value && (
           <div style={inputStyle}>
@@ -84,10 +98,9 @@ const ConversionBlock = React.memo((props: PropsType) => {
       {windowsWithCurrency.length > 2 && (
         <img
           src={deleteImg}
+          alt='delete-currency'
           className='deleteBtn'
-          onClick={() => {
-            dispatch(deleteWindowsWithCurrencyAC({ index: props.index }));
-          }}
+          onClick={deleteCurrencyWindow}
         />
       )}
     </div>

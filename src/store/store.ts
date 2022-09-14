@@ -13,10 +13,3 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(thunkMiddleware),
 });
-
-declare global {
-  interface Window {
-    store: any;
-  }
-}
-window.store = store;

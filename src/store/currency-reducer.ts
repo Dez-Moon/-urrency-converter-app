@@ -1,34 +1,26 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import {
-  CurrencyResponseType,
-  CurrencyType,
-  WindowsWithCurrencyType,
-} from "../types/types";
+import { CurrencyType, WindowsWithCurrencyType } from "../types/types";
 import { v4 } from "uuid";
 import {
   changeValueInAllWindow,
   checkSelectedCurrencies,
-  getFilteredCurrenciesFromResponse,
   getNewObjectCurrency,
   getObjectWithNoSelectedCurrency,
   getWindowsWithCurrencyOnStartApp,
   valueValidator,
 } from "../functions/functions";
-import currencyData from "../currency/currencyData";
 
 export type InitialStateType = {
   currency: Array<CurrencyType>;
   windowsWithCurrency: Array<WindowsWithCurrencyType>;
   errors: Array<{ error: string; index: string }>;
-  globalError: string;
   appLoaded: boolean;
 };
 const initialState: InitialStateType = {
   currency: [],
   windowsWithCurrency: [],
   errors: [],
-  globalError: "",
   appLoaded: false,
 };
 const slice = createSlice({
@@ -107,14 +99,6 @@ const slice = createSlice({
         if (error.index === action.payload.index) state.errors.splice(index, 1);
       });
     },
-    setGlobalErrorAC(
-      state,
-      action: PayloadAction<{
-        error: string;
-      }>
-    ) {
-      state.globalError = action.payload.error;
-    },
     setAppLoadedAC(
       state,
       action: PayloadAction<{
@@ -136,29 +120,22 @@ export const {
   deleteWindowsWithCurrencyAC,
   addErrorAC,
   deleteErrorAC,
-  setGlobalErrorAC,
   setAppLoadedAC,
 } = slice.actions;
 
 export const setCurrencyTC = () => async (dispatch: Dispatch) => {
   try {
-    const response = await axios.get<Array<CurrencyResponseType>>(
-      "https://api.monobank.ua/bank/currency"
+    const response = await axios.get<Array<CurrencyType>>(
+      "https://api-current-currency.herokuapp.com/"
     );
-    // Достаем из response указанные в currencyData валюты
-    const currency = getFilteredCurrenciesFromResponse(response, currencyData);
-    dispatch(setCurrencyAC({ currency }));
-    createWindowsWithCurrencyTC(currency)(dispatch);
-  } catch {
-    dispatch(
-      setGlobalErrorAC({
-        error: "Запрос на сервер не удался. Использовать тестовые данные?",
-      })
-    );
+    dispatch(setCurrencyAC({ currency: response.data }));
+    createWindowsWithCurrencyTC(response.data)(dispatch);
+  } catch (error: any) {
+    dispatch(addErrorAC({ error }));
   }
   setTimeout(() => {
     dispatch(setAppLoadedAC({ value: true }));
-  }, 1500);
+  }, 1000);
 };
 export const createWindowsWithCurrencyTC =
   (currency: Array<CurrencyType>) => (dispatch: Dispatch) => {
@@ -166,8 +143,8 @@ export const createWindowsWithCurrencyTC =
       // Создаем окна с валютами при старте
       const newArray = getWindowsWithCurrencyOnStartApp(currency, 2);
       dispatch(setWindowsWithCurrencyAC({ newArray }));
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      dispatch(addErrorAC({ error }));
     }
   };
 
@@ -183,8 +160,9 @@ export const addWindowsWithCurrencyTC =
         windowsWithCurrency
       );
       dispatch(addWindowsWithCurrencyAC({ object }));
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.message)
+        dispatch(addErrorAC({ error: "Все доступные валюты добавлены" }));
     }
   };
 
@@ -206,7 +184,7 @@ export const setValuesWindowsWithCurrencyTC =
       );
       dispatch(setWindowsWithCurrencyAC({ newArray }));
     } catch (error: any) {
-      if (error) dispatch(addErrorAC({ error }));
+      if (error.message) dispatch(addErrorAC({ error: error.message }));
     }
   };
 
@@ -234,6 +212,6 @@ export const setSelectedCurrencyTC =
       );
       dispatch(setSelectedCurrencyAC({ object, index: indexWindow }));
     } catch (error: any) {
-      dispatch(addErrorAC({ error }));
+      if (error.message) dispatch(addErrorAC({ error: error.message }));
     }
   };
